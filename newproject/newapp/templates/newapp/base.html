@@ -7,5 +7,11 @@
 </head>
 <body>
     <h1>{{ bob2 }}</h1>
+    <form action="{% url 'create_task' %}" method="POST">
+        {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+    </form>
+    <button type="submit" value="submit"></button>
 </body>
 </html>
