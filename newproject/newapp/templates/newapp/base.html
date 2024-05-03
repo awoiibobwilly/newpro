@@ -12,6 +12,34 @@
     {{ form }}
     <input type="submit" value="Submit">
     </form>
-    <button type="submit" value="submit"></button>
-</body>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Task Details</th>
+                <th>No People</th>
+                <th>Date</th>
+                <th>Day</th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasklist %}
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.details }}</td>
+                <td>{{ task.number_of_people }}</td>
+                <td>{{ task.date }}</td>
+                <td>{{ task.day_of_week }}</td>
+                <td>
+                    <a href="{% url 'delete_task' task.id %}">Delete</a> 
+                    <a href="{% url 'edit_task' task.id %}">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   </body>
 </html>
