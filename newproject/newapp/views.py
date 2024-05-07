@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import TaskForm
-from .models import Task # we are import the model
+from .models import Task # we are importing the model
 from django.urls import reverse
 
 # Create your views here.
 tasks = {'Monday': 'Go Shopping','Tuesday': 'Gym Time','Wednesday': 'Office Work','Thursday': 'Business Meeting','Friday': 'Recreation Time'}
 
 
-def taskall(request,day):
-    todo = tasks.get(day)
+def taskall(request):
+    # todo = tasks.get(day)
     form = TaskForm()   #this is creating an instance (instanciation), we have invoked the class.
     return render(request, 'newapp/base.html', {'bob2': todo, 'title': day, 'form': form})
 
@@ -20,20 +20,19 @@ def create_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
+            # print('create')
             a_name = form.cleaned_data ['name']    #these field names are from the model, name as it is in the left can change or vary, but what us is in [] should be maintained
             b_details = form.cleaned_data ['details'] #these field names are from the 
             c_number_of_people = form.cleaned_data ['number_of_people'] 
             d_date = form.cleaned_data ['date'] #these field names 
             e_day_of_week = form.cleaned_data ['day_of_week'] #these field names 
             Task.objects.create(name=a_name, details = b_details, number_of_people=c_number_of_people, date=d_date, day_of_week=e_day_of_week)#We pass the actual data as it is in the model
-            # return HttpResponseRedirect(reverse('indexpage'))
-            return redirect('/index')
-        else:
-            print('form is invalid')
-            
+            return HttpResponseRedirect(reverse('indexpage'))
+            return redirect('/index')      
     else:
+        # tasklist = []
         form = TaskForm()
-        tasklist = Task.objects.all() #We are retrieving list and sending it back
+    tasklist = Task.objects.all() #We are retrieving list and sending it back
     return render(request, 'newapp/base.html', {'form': form, 'tasklist': tasklist})
 
 # def __str__(self):

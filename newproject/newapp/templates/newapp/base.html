@@ -9,7 +9,12 @@
     <h1>{{ bob2 }}</h1>
     <form action="{% url 'create_task' %}" method="POST">
         {% csrf_token %}
-    {{ form }}
+        {% for form_field in form %}
+            {{ form_field.label_tag }}
+            {{ form_field }}
+            {{ form_field.errors }}
+        {% endfor %}
+    
     <input type="submit" value="Submit">
     </form>
     <table>
